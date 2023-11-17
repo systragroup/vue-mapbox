@@ -16,11 +16,12 @@ import options from './options'
 import withWatchers from './mixins/withWatchers'
 import { computed } from 'vue'
 import withPrivateMethods from './mixins/withPrivateMethods'
+import withAsyncActions from './mixins/withAsyncActions'
 
 export default {
   name: 'GlMap',
 
-  mixins: [withWatchers, withPrivateMethods, withEvents],
+  mixins: [withWatchers, withPrivateMethods, withEvents, withAsyncActions],
 
   provide () {
     return {
@@ -90,6 +91,8 @@ export default {
       }
       const eventNames = Object.keys(mapEvents)
       this.$_bindMapEvents(eventNames)
+      this.$_registerAsyncActions(map)
+
       this.$_bindPropsUpdateEvents()
       this.initial = false
       this.initialized = true

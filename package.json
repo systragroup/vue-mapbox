@@ -1,6 +1,6 @@
 {
   "name": "vue-mapbox",
-  "version": "0.5.9",
+  "version": "0.6.0",
   "author": {
     "name": "soal",
     "email": "sorrrow.about.alice@gmail.com",
@@ -22,18 +22,8 @@
     "docs:serve": "vuepress dev docs_source",
     "docs:build": "vuepress build docs_source"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,json,css,md}": [
-      "prettier --write",
-      "git add"
-    ]
-  },
   "peerDependencies": {
+    "map-promisified": "latest",
     "mapbox-gl": "^2.15.0",
     "vue": "^3.3.8"
   },
@@ -45,8 +35,6 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.10.0",
     "eslint-loader": "2.1.1",
-    "husky": "^1.2.0",
-    "lint-staged": "^8.1.0",
     "vue": "^3.3.8",
     "@vue/compiler-sfc": "^3.3.4",
     "vuepress": "^1.0.0-alpha.37",

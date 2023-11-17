@@ -1,4 +1,5 @@
 import { computed as f, openBlock as c, createElementBlock as p, setBlockTracking as y, createElementVNode as $, renderSlot as u, createCommentVNode as g } from "vue";
+import v from "map-promisified";
 const i = {
   methods: {
     /**
@@ -23,7 +24,7 @@ const i = {
       this.$_emitEvent(e.type, { mapboxEvent: e, ...t }), e.originalEvent && e.originalEvent.stopPropagation();
     }
   }
-}, v = {
+}, _ = {
   resize: { name: "resize" },
   webglcontextlost: { name: "webglcontextlost" },
   webglcontextrestored: { name: "webglcontextrestored" },
@@ -65,7 +66,7 @@ const i = {
   dragstart: { name: "dragstart" },
   pitch: { name: "pitch" },
   idle: { name: "idle" }
-}, _ = {
+}, b = {
   container: {
     type: [String, HTMLElement],
     default() {
@@ -252,7 +253,7 @@ const i = {
     type: Boolean,
     default: !0
   }
-}, b = {
+}, S = {
   maxBounds(e) {
     this.map.setMaxBounds(e);
   },
@@ -292,22 +293,22 @@ const i = {
     this.map.setLigh(e);
   }
 };
-function S(e, t, r, a) {
+function I(e, t, r, s) {
   this.initial || (this.$attrs[`onUpdate:${e}`] ? (this.propsIsUpdating[e] ? (this._watcher.active = !1, this.$nextTick(() => {
     this._watcher.active = !0;
-  })) : (this._watcher.active = !0, t(r, a)), this.propsIsUpdating[e] = !1) : t(r, a));
+  })) : (this._watcher.active = !0, t(r, s)), this.propsIsUpdating[e] = !1) : t(r, s));
 }
-function I() {
+function L() {
   const e = {};
-  return Object.entries(b).forEach((t) => {
-    e[t[0]] = function(r, a) {
-      return S.call(this, t[0], t[1].bind(this), r, a);
+  return Object.entries(S).forEach((t) => {
+    e[t[0]] = function(r, s) {
+      return I.call(this, t[0], t[1].bind(this), r, s);
     };
   }), e;
 }
-const L = {
-  watch: I()
-}, E = {
+const E = {
+  watch: L()
+}, x = {
   methods: {
     $_updateSyncedPropsFabric(e, t) {
       return () => {
@@ -346,9 +347,9 @@ const L = {
             return this.$props.bounds instanceof Array && (t = t.toArray()), t;
           }
         }
-      ].forEach(({ events: t, prop: r, getter: a }) => {
-        t.forEach((s) => {
-          this.$attrs[`onUpdate:${r}`] && this.map.on(s, this.$_updateSyncedPropsFabric(r, a));
+      ].forEach(({ events: t, prop: r, getter: s }) => {
+        t.forEach((a) => {
+          this.$attrs[`onUpdate:${r}`] && this.map.on(a, this.$_updateSyncedPropsFabric(r, s));
         });
       });
     },
@@ -367,7 +368,9 @@ const L = {
       this.$emit("rtl-plugin-error", { map: this.map, error: e });
     },
     $_bindMapEvents(e) {
-      let t = Object.keys(this.$attrs).filter((r) => r.startsWith("on"));
+      let t = Object.keys(this.$attrs).filter(
+        (r) => r.startsWith("on")
+      );
       t = t.map((r) => r.slice(2).toLowerCase()), t.forEach((r) => {
         e.includes(r) && this.map.on(r, this.$_emitMapEvent);
       });
@@ -378,15 +381,38 @@ const L = {
       });
     }
   }
+}, w = {
+  created() {
+    this.actions = {};
+  },
+  methods: {
+    $_registerAsyncActions(e) {
+      this.actions = {
+        ...v(e),
+        stop() {
+          this.map.stop();
+          const t = {
+            pitch: this.map.getPitch(),
+            zoom: this.map.getZoom(),
+            bearing: this.map.getBearing(),
+            center: this.map.getCenter()
+          };
+          return Object.entries(t).forEach((r) => {
+            this.$_updateSyncedPropsFabric(r[0], r[1])();
+          }), Promise.resolve(t);
+        }
+      };
+    }
+  }
 };
 const m = (e, t) => {
   const r = e.__vccOpts || e;
-  for (const [a, s] of t)
-    r[a] = s;
+  for (const [s, a] of t)
+    r[s] = a;
   return r;
-}, x = {
+}, k = {
   name: "GlMap",
-  mixins: [L, E, i],
+  mixins: [E, x, i, w],
   provide() {
     return {
       map: f(() => this.map),
@@ -398,7 +424,7 @@ const m = (e, t) => {
       type: Object,
       default: null
     },
-    ..._
+    ...b
   },
   data() {
     return {
@@ -441,8 +467,8 @@ const m = (e, t) => {
         this.RTLTextPluginUrl,
         this.$_RTLTextPluginError
       );
-      const t = Object.keys(v);
-      this.$_bindMapEvents(t), this.$_bindPropsUpdateEvents(), this.initial = !1, this.initialized = !0, this.$emit("load", { map: e, component: this });
+      const t = Object.keys(_);
+      this.$_bindMapEvents(t), this.$_registerAsyncActions(e), this.$_bindPropsUpdateEvents(), this.initial = !1, this.initialized = !0, this.$emit("load", { map: e, component: this });
     });
   },
   beforeDestroy() {
@@ -450,17 +476,17 @@ const m = (e, t) => {
       this.map && this.map.remove();
     });
   }
-}, w = { class: "mgl-map-wrapper" };
-function k(e, t, r, a, s, h) {
-  return c(), p("div", w, [
+}, M = { class: "mgl-map-wrapper" };
+function C(e, t, r, s, a, h) {
+  return c(), p("div", M, [
     t[0] || (y(-1), t[0] = $("div", {
       id: e.container,
       ref: "container"
     }, null, 8, ["id"]), y(1), t[0]),
-    s.initialized ? u(e.$slots, "default", { key: 0 }) : g("", !0)
+    a.initialized ? u(e.$slots, "default", { key: 0 }) : g("", !0)
   ]);
 }
-const M = /* @__PURE__ */ m(x, [["render", k]]), d = {
+const B = /* @__PURE__ */ m(k, [["render", C]]), d = {
   methods: {
     $_emitSelfEvent(e, t = {}) {
       this.$_emitMapEvent(e, { control: this.control, ...t });
@@ -470,9 +496,11 @@ const M = /* @__PURE__ */ m(x, [["render", k]]), d = {
      * so we treat them as 'self' events of these objects
      */
     $_bindSelfEvents(e, t) {
-      let r = Object.keys(this.$attrs).filter((a) => a.startsWith("on"));
-      r = r.map((a) => a.slice(2).toLowerCase()), r.forEach((a) => {
-        e.includes(a) && t.on(a, this.$_emitSelfEvent);
+      let r = Object.keys(this.$attrs).filter(
+        (s) => s.startsWith("on")
+      );
+      r = r.map((s) => s.slice(2).toLowerCase()), r.forEach((s) => {
+        e.includes(s) && t.on(s, this.$_emitSelfEvent);
       });
     },
     $_unbindSelfEvents(e, t) {
@@ -506,7 +534,7 @@ const M = /* @__PURE__ */ m(x, [["render", k]]), d = {
   },
   render() {
   }
-}, C = {
+}, P = {
   name: "NavigationControl",
   mixins: [n],
   props: {
@@ -522,12 +550,12 @@ const M = /* @__PURE__ */ m(x, [["render", k]]), d = {
   created() {
     this.control = new this.mapbox.NavigationControl(this.$props), this.$_addControl();
   }
-}, B = {
+}, O = {
   trackuserlocationstart: "trackuserlocationstart",
   trackuserlocationend: "trackuserlocationend",
   geolocate: "geolocate",
   error: "error"
-}, P = {
+}, j = {
   name: "GeolocateControl",
   mixins: [i, d, n],
   props: {
@@ -555,7 +583,7 @@ const M = /* @__PURE__ */ m(x, [["render", k]]), d = {
   },
   created() {
     const e = this.mapbox.GeolocateControl;
-    this.control = new e(this.$props), this.$_addControl(), this.$_bindSelfEvents(Object.keys(B), this.control);
+    this.control = new e(this.$props), this.$_addControl(), this.$_bindSelfEvents(Object.keys(O), this.control);
   },
   methods: {
     trigger() {
@@ -563,7 +591,7 @@ const M = /* @__PURE__ */ m(x, [["render", k]]), d = {
         return this.control.trigger();
     }
   }
-}, O = {
+}, T = {
   name: "FullscreenControl",
   mixins: [n],
   props: {
@@ -575,7 +603,7 @@ const M = /* @__PURE__ */ m(x, [["render", k]]), d = {
   created() {
     this.control = new this.mapbox.FullscreenControl(this.$props), this.$_addControl();
   }
-}, j = {
+}, z = {
   name: "AttributionControl",
   mixins: [n],
   props: {
@@ -591,7 +619,7 @@ const M = /* @__PURE__ */ m(x, [["render", k]]), d = {
   created() {
     this.control = new this.mapbox.AttributionControl(this.$props), this.$_addControl();
   }
-}, T = {
+}, F = {
   name: "ScaleControl",
   mixins: [n],
   props: {
@@ -615,15 +643,15 @@ const M = /* @__PURE__ */ m(x, [["render", k]]), d = {
   created() {
     this.control = new this.mapbox.ScaleControl(this.$props), this.$_addControl();
   }
-}, z = {
+}, A = {
   drag: "drag",
   dragstart: "dragstart",
   dragend: "dragend"
-}, F = {
+}, R = {
   click: "click",
   mouseenter: "mouseenter",
   mouseleave: "mouseleave"
-}, R = {
+}, Z = {
   name: "MapMarker",
   mixins: [i, d],
   inject: ["mapbox", "map"],
@@ -676,10 +704,10 @@ const M = /* @__PURE__ */ m(x, [["render", k]]), d = {
       ...this.$props
     };
     this.$slots.marker && (e.element = this.$slots.marker[0].elm), this.marker = new this.mapbox.Marker(e), this.$attrs["onUpdate:coordinates"] && this.marker.on("dragend", (r) => {
-      let a;
-      this.coordinates instanceof Array ? a = [r.target._lngLat.lng, r.target._lngLat.lat] : a = r.target._lngLat, this.$emit("update:coordinates", a);
+      let s;
+      this.coordinates instanceof Array ? s = [r.target._lngLat.lng, r.target._lngLat.lat] : s = r.target._lngLat, this.$emit("update:coordinates", s);
     });
-    const t = Object.keys(z);
+    const t = Object.keys(A);
     this.$_bindSelfEvents(t, this.marker), this.initial = !1, this.$_addMarker();
   },
   beforeDestroy() {
@@ -695,7 +723,7 @@ const M = /* @__PURE__ */ m(x, [["render", k]]), d = {
     $_bindMarkerDOMEvents() {
       let e = Object.keys(this.$attrs).filter((t) => t.startsWith("on"));
       e = e.map((t) => t.slice(2).toLowerCase()), e.forEach((t) => {
-        Object.values(F).includes(t) && this.marker._element.addEventListener(t, (r) => {
+        Object.values(R).includes(t) && this.marker._element.addEventListener(t, (r) => {
           this.$_emitSelfEvent(r);
         });
       });
@@ -707,17 +735,17 @@ const M = /* @__PURE__ */ m(x, [["render", k]]), d = {
       return this.marker.togglePopup();
     }
   }
-}, A = { style: { display: "none" } };
-function Z(e, t, r, a, s, h) {
-  return c(), p("div", A, [
+}, N = { style: { display: "none" } };
+function U(e, t, r, s, a, h) {
+  return c(), p("div", N, [
     u(e.$slots, "marker"),
-    s.marker ? u(e.$slots, "default", { key: 0 }) : g("", !0)
+    a.marker ? u(e.$slots, "default", { key: 0 }) : g("", !0)
   ]);
 }
-const N = /* @__PURE__ */ m(R, [["render", Z]]), U = {
+const D = /* @__PURE__ */ m(Z, [["render", U]]), G = {
   open: "open",
   close: "close"
-}, D = {
+}, q = {
   name: "Popup",
   mixins: [i, d],
   inject: {
@@ -832,7 +860,7 @@ const N = /* @__PURE__ */ m(R, [["render", Z]]), U = {
         const e = this.$refs.content;
         this.popup.setDOMContent(e);
       }
-      this.$_bindSelfEvents(Object.keys(U), this.popup), this.$_emitEvent("added", { popup: this.popup }), this.marker && this.marker.setPopup(this.popup), this.showed && (this.open = !0, this.marker && this.marker.togglePopup());
+      this.$_bindSelfEvents(Object.keys(G), this.popup), this.$_emitEvent("added", { popup: this.popup }), this.marker && this.marker.setPopup(this.popup), this.showed && (this.open = !0, this.marker && this.marker.togglePopup());
     },
     $_emitSelfEvent(e) {
       this.$_emitMapEvent(e, { popup: this.popup });
@@ -841,16 +869,16 @@ const N = /* @__PURE__ */ m(R, [["render", Z]]), U = {
       this.popup.remove(), this.$_emitEvent("remove", { popup: this.popup });
     }
   }
-}, G = ["id"];
-function q(e, t, r, a, s, h) {
+}, V = ["id"];
+function W(e, t, r, s, a, h) {
   return c(), p("section", {
     id: `popup-${Date.now()}`,
     ref: "content"
   }, [
     u(e.$slots, "default")
-  ], 8, G);
+  ], 8, V);
 }
-const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
+const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
   "mousedown",
   "mouseup",
   "click",
@@ -864,7 +892,7 @@ const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
   "touchstart",
   "touchend",
   "touchcancel"
-], W = {
+], J = {
   sourceId: {
     type: String,
     required: !0
@@ -873,7 +901,7 @@ const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
     type: [Object, String],
     default: void 0
   }
-}, H = {
+}, K = {
   layerId: {
     type: String,
     required: !0
@@ -886,7 +914,7 @@ const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
     type: String,
     default: void 0
   }
-}, J = {
+}, Q = {
   clearSource: {
     type: Boolean,
     default: !0
@@ -902,9 +930,9 @@ const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
 }, o = {
   mixins: [i],
   props: {
-    ...W,
-    ...H,
-    ...J
+    ...J,
+    ...K,
+    ...Q
   },
   inject: ["mapbox", "map"],
   data() {
@@ -978,7 +1006,9 @@ const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
       return this.$_emitMapEvent(e, { layerId: this.layerId });
     },
     $_bindLayerEvents(e) {
-      let t = Object.keys(this.$attrs).filter((r) => r.startsWith("on"));
+      let t = Object.keys(this.$attrs).filter(
+        (r) => r.startsWith("on")
+      );
       t = t.map((r) => r.slice(2).toLowerCase()), t.forEach((r) => {
         e.includes(r) && this.map.on(r, this.layerId, this.$_emitLayerMapEvent);
       });
@@ -1003,7 +1033,7 @@ const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
   },
   render() {
   }
-}, K = {
+}, X = {
   name: "GeojsonLayer",
   mixins: [o],
   computed: {
@@ -1019,7 +1049,7 @@ const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
     getClusterExpansionZoom() {
       return (e) => new Promise((t, r) => {
         if (this.mapSource)
-          this.mapSource.getClusterExpansionZoom(e, (a, s) => a ? r(a) : t(s));
+          this.mapSource.getClusterExpansionZoom(e, (s, a) => s ? r(s) : t(a));
         else
           return r(
             new Error(`Map source with id ${this.sourceId} not found.`)
@@ -1028,9 +1058,9 @@ const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
     },
     getClusterChildren() {
       return (e) => new Promise((t, r) => {
-        const a = this.mapSource;
-        if (a)
-          a.getClusterChildren(e, (s, h) => s ? r(s) : t(h));
+        const s = this.mapSource;
+        if (s)
+          s.getClusterChildren(e, (a, h) => a ? r(a) : t(h));
         else
           return r(
             new Error(`Map source with id ${this.sourceId} not found.`)
@@ -1040,7 +1070,7 @@ const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
     getClusterLeaves() {
       return (...e) => new Promise((t, r) => {
         if (this.mapSource)
-          this.mapSource.getClusterLeaves(...e, (a, s) => a ? r(a) : t(s));
+          this.mapSource.getClusterLeaves(...e, (s, a) => s ? r(s) : t(a));
         else
           return r(
             new Error(`Map source with id ${this.sourceId} not found.`)
@@ -1100,16 +1130,16 @@ const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
     },
     removeFeatureState(e, t, r) {
       if (this.map) {
-        const a = {
+        const s = {
           id: e,
           source: this.source,
           sourceLayer: t
         };
-        return this.map.removeFeatureState(a, r);
+        return this.map.removeFeatureState(s, r);
       }
     }
   }
-}, Q = {
+}, Y = {
   name: "ImageLayer",
   mixins: [o],
   created() {
@@ -1160,7 +1190,7 @@ const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
       this.map.addLayer(t, this.before), this.$_emitEvent("added", { layerId: this.layerId });
     }
   }
-}, X = {
+}, ee = {
   name: "CanvasLayer",
   mixins: [o],
   inject: ["mapbox", "map"],
@@ -1220,7 +1250,7 @@ const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
       });
     }
   }
-}, Y = {
+}, te = {
   name: "VideoLayer",
   mixins: [o],
   computed: {
@@ -1263,7 +1293,7 @@ const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
       this.map.addLayer(t, this.before), this.$_emitEvent("added", { layerId: this.layerId });
     }
   }
-}, ee = {
+}, re = {
   name: "VectorLayer",
   mixins: [o],
   computed: {
@@ -1337,7 +1367,7 @@ const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
       }
     }
   }
-}, te = {
+}, se = {
   name: "RasterLayer",
   mixins: [o],
   created() {
@@ -1373,31 +1403,31 @@ const V = /* @__PURE__ */ m(D, [["render", q]]), l = [
       this.map.addLayer(t, this.before), this.$_emitEvent("added", { layerId: this.layerId });
     }
   }
-}, ae = i, se = d, ie = n, oe = o, ne = {
+}, oe = i, ne = d, de = n, le = o, he = {
   withEvents: i,
   withSelfEvents: d,
   asControl: n,
   asLayer: o
-}, de = M, le = C, he = P, ue = O, ce = j, pe = T, me = K, fe = Q, ye = X, ge = Y, $e = ee, ve = te, _e = N, be = V;
+}, ue = B, ce = P, pe = j, me = T, fe = z, ye = F, ge = X, $e = Y, ve = ee, _e = te, be = re, Se = se, Ie = D, Le = H;
 export {
-  ne as $helpers,
-  ce as MglAttributionControl,
-  ye as MglCanvasLayer,
-  ue as MglFullscreenControl,
-  me as MglGeojsonLayer,
-  he as MglGeolocateControl,
-  fe as MglImageLayer,
-  de as MglMap,
-  _e as MglMarker,
-  le as MglNavigationControl,
-  be as MglPopup,
-  ve as MglRasterLayer,
-  pe as MglScaleControl,
-  $e as MglVectorLayer,
-  ge as MglVideoLayer,
-  ie as asControl,
-  oe as asLayer,
-  M as default,
-  ae as withEvents,
-  se as withSelfEvents
+  he as $helpers,
+  fe as MglAttributionControl,
+  ve as MglCanvasLayer,
+  me as MglFullscreenControl,
+  ge as MglGeojsonLayer,
+  pe as MglGeolocateControl,
+  $e as MglImageLayer,
+  ue as MglMap,
+  Ie as MglMarker,
+  ce as MglNavigationControl,
+  Le as MglPopup,
+  Se as MglRasterLayer,
+  ye as MglScaleControl,
+  be as MglVectorLayer,
+  _e as MglVideoLayer,
+  de as asControl,
+  le as asLayer,
+  B as default,
+  oe as withEvents,
+  ne as withSelfEvents
 };
