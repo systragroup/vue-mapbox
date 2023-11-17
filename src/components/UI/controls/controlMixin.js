@@ -1,10 +1,11 @@
+// import withRegistration from "../../../lib/withRegistration";
 import withEvents from "../../../lib/withEvents";
 import withSelfEvents from "../withSelfEvents";
 
 export default {
   mixins: [withEvents, withSelfEvents],
 
-  inject: ["mapbox", "map", "actions"],
+  inject: ["mapbox", "map"],
 
   props: {
     position: {

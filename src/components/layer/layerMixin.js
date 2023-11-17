@@ -49,7 +49,6 @@ export default {
     ...mapboxLayerStyleProps,
     ...componentProps
   },
-
   inject: ["mapbox", "map"],
 
   data() {
@@ -91,7 +90,7 @@ export default {
         function(next) {
           if (this.initial) return;
           if (next) {
-            for (let prop of Object.keys(next)) {
+            for (const prop of Object.keys(next)) {
               this.map.setPaintProperty(this.layerId, prop, next[prop]);
             }
           }
@@ -106,7 +105,7 @@ export default {
         function(next) {
           if (this.initial) return;
           if (next) {
-            for (let prop of Object.keys(next)) {
+            for (const prop of Object.keys(next)) {
               this.map.setLayoutProperty(this.layerId, prop, next[prop]);
             }
           }
@@ -156,7 +155,11 @@ export default {
     },
 
     $_bindLayerEvents(events) {
-      Object.keys(this.$listeners).forEach(eventName => {
+      let listeners = Object.keys(this.$attrs).filter(attr =>
+        attr.startsWith("on")
+      );
+      listeners = listeners.map(attr => attr.slice(2).toLowerCase());
+      listeners.forEach(eventName => {
         if (events.includes(eventName)) {
           this.map.on(eventName, this.layerId, this.$_emitLayerMapEvent);
         }
@@ -182,7 +185,7 @@ export default {
       this.map.moveLayer(this.layerId, beforeId);
       this.$_emitEvent("layer-moved", {
         layerId: this.layerId,
-        beforeId: beforeId
+        beforeId
       });
     },
 

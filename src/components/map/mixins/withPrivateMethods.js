@@ -3,7 +3,7 @@ export default {
     $_updateSyncedPropsFabric(prop, data) {
       return () => {
         this.propsIsUpdating[prop] = true;
-        let info = typeof data === "function" ? data() : data;
+        const info = typeof data === "function" ? data() : data;
         return this.$emit(`update:${prop}`, info);
       };
     },
@@ -44,7 +44,7 @@ export default {
       ];
       syncedProps.forEach(({ events, prop, getter }) => {
         events.forEach(event => {
-          if (this.$listeners[`update:${prop}`]) {
+          if (this.$attrs[`onUpdate:${prop}`]) {
             this.map.on(event, this.$_updateSyncedPropsFabric(prop, getter));
           }
         });
@@ -57,7 +57,7 @@ export default {
         return new Promise(resolve => {
           if (this.accessToken) this.mapbox.accessToken = this.accessToken;
           const map = new this.mapbox.Map({
-            ...this._props,
+            ...this.$props,
             container: this.$refs.container,
             style: this.mapStyle
           });
@@ -67,11 +67,15 @@ export default {
     },
 
     $_RTLTextPluginError(error) {
-      this.$emit("rtl-plugin-error", { map: this.map, error: error });
+      this.$emit("rtl-plugin-error", { map: this.map, error });
     },
 
     $_bindMapEvents(events) {
-      Object.keys(this.$listeners).forEach(eventName => {
+      let listeners = Object.keys(this.$attrs).filter(attr =>
+        attr.startsWith("on")
+      );
+      listeners = listeners.map(attr => attr.slice(2).toLowerCase());
+      listeners.forEach(eventName => {
         if (events.includes(eventName)) {
           this.map.on(eventName, this.$_emitMapEvent);
         }

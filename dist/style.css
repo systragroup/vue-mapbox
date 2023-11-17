@@ -3,7 +3,6 @@
   position: relative;
   width: 100%;
 }
-
 .mgl-map-wrapper .mapboxgl-map {
   height: 100%;
   left: 0;
@@ -11,7 +10,6 @@
   top: 0;
   width: 100%;
 }
-
 .mapboxgl-canvas-container {
   position: absolute;
 }

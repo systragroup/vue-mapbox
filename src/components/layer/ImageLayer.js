@@ -61,7 +61,7 @@ export default {
     },
 
     $_addLayer() {
-      let existed = this.map.getLayer(this.layerId);
+      const existed = this.map.getLayer(this.layerId);
       if (existed) {
         if (this.replace) {
           this.map.removeLayer(this.layerId);
