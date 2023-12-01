@@ -17,8 +17,6 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "serve": "vue-cli-service build --target lib --name vue-mapbox src/main.js --watch",
-    "lint": "vue-cli-service lint",
     "docs:serve": "vuepress dev docs_source",
     "docs:build": "vuepress build docs_source"
   },
@@ -28,16 +26,12 @@
     "vue": "^3.3.8"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.2.0",
-    "@vue/cli-plugin-eslint": "^3.2.1",
-    "@vue/cli-service": "^3.2.0",
-    "@vue/eslint-config-prettier": "^4.0.1",
-    "babel-eslint": "^10.0.1",
+    "@babel/eslint-parser": "^7.22.10",
     "eslint": "^5.10.0",
     "eslint-loader": "2.1.1",
     "vue": "^3.3.8",
     "@vue/compiler-sfc": "^3.3.4",
-    "vuepress": "^1.0.0-alpha.37",
+    "vuepress": "^1.9.10",
     "@vitejs/plugin-vue": "^4.2.3",
     "vite": "^4.3.9",
     "vite-plugin-style-import": "^2.0.0",

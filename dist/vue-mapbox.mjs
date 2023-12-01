@@ -21,7 +21,7 @@ const i = {
      * @param {Object} event
      */
     $_emitMapEvent(e, t = {}) {
-      this.$_emitEvent(e.type, { mapboxEvent: e, ...t }), e.originalEvent && e.originalEvent.stopPropagation();
+      this.$_emitEvent(e.type, { mapboxEvent: e, ...t });
     }
   }
 }, _ = {

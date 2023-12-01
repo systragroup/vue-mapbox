@@ -21,9 +21,7 @@ export default {
      */
     $_emitMapEvent(event, data = {}) {
       this.$_emitEvent(event.type, { mapboxEvent: event, ...data });
-      if (event.originalEvent) {
-        event.originalEvent.stopPropagation();
-      }
+
     }
   }
 };
