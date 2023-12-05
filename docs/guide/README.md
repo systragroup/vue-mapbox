@@ -27,6 +27,6 @@ Add mapbox JS and CSS files to the files where you need them:
 ```js
 import "mapbox-gl/dist/mapbox-gl.css";
 import Mapbox from "mapbox-gl";
-import { MglMap } from "vue-mapbox";
+import { MglMap } from "vue-mapbox3";
 ```
 

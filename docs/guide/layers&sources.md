@@ -26,7 +26,7 @@ For example adding a layer with GeoJSON data:
 </template>
 
 <script>
-import { MglMap, MglNavigationControl, MglGeojsonLayer } from "vue-mapbox";
+import { MglMap, MglNavigationControl, MglGeojsonLayer } from "vue-mapbox3";
 
 export default {
   components: {

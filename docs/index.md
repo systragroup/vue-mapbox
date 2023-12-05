@@ -18,8 +18,8 @@ hero:
       link: /api/README
 
 features:
-  - title: Vue3 compatible
-    details: Bare minimum was changed to work with Vue 3. Some component were not tested. Please create an Issue if a component need a migration.
+  - title: Easy migration to Vue 3
+    details: Bare minimum was changed to work with Vue 3. Every component are the same as before for a easy migration
   - title: Declarative style
     details: You can use map elements like layers, markers, popups as Vue components and control them via synchronized props
   - title: Vuefied

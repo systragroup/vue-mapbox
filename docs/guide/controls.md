@@ -34,7 +34,7 @@ import {
   MglGeolocateControl,
   MglFullscreenControl,
   MglScaleControl
-} from "vue-mapbox";
+} from "vue-mapbox3";
 
 export default {
   components: {

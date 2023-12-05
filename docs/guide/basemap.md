@@ -14,7 +14,7 @@ If you using self-hosting maps on your own server you can omit this parameter.
 <script>
 import "mapbox-gl/dist/mapbox-gl.css";
 import Mapbox from "mapbox-gl";
-import { MglMap } from "vue-mapbox";
+import { MglMap } from "vue-mapbox3";
 
 export default {
   components: {
