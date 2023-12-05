@@ -1,15 +1,15 @@
 {
-  "name": "vue-mapbox",
+  "name": "vue-mapbox3",
   "version": "0.6.0",
   "author": {
-    "name": "soal",
-    "email": "sorrrow.about.alice@gmail.com",
-    "url": "https://github.com/soal"
+    "name": "simon boivin",
+    "email": "sboivin@systra.com",
+    "url": "https://github.com/systragroup"
   },
-  "homepage": "https://soal.github.io/vue-mapbox",
+  "homepage": "https://github.com/systragroup/vue-mapbox",
   "repository": {
     "type": "git",
-    "url": "https://github.com/soal/vue-mapbox.git"
+    "url": "https://github.com/systragroup/vue-mapbox.git"
   },
   "private": false,
   "main": "dist/vue-mapbox.umd.js",
@@ -17,8 +17,9 @@
   "scripts": {
     "start": "vite",
     "build": "vite build",
-    "docs:serve": "vuepress dev docs_source",
-    "docs:build": "vuepress build docs_source"
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "peerDependencies": {
     "map-promisified": "latest",
@@ -27,14 +28,16 @@
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.22.10",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@vue/compiler-sfc": "^3.3.4",
     "eslint": "^5.10.0",
     "eslint-loader": "2.1.1",
-    "vue": "^3.3.8",
-    "@vue/compiler-sfc": "^3.3.4",
-    "vuepress": "^1.9.10",
-    "@vitejs/plugin-vue": "^4.2.3",
     "vite": "^4.3.9",
     "vite-plugin-style-import": "^2.0.0",
-    "vite-plugin-stylelint": "^4.3.0"
+    "vite-plugin-stylelint": "^4.3.0",
+    "vue": "^3.3.8"
+  },
+  "dependencies": {
+    "vitepress": "^1.0.0-rc.31"
   }
 }

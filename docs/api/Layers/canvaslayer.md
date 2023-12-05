@@ -11,4 +11,4 @@ All common [layers props](/api/Layers/README.md#props)
 
 ## Events
 
-All common layer [events](/api/Layers/#events)
+All common layer [events](/api/Layers/README.md#events)

@@ -1,5 +1,4 @@
 # ImageLayer
-
 ## Props
 
 All common [layers props](/api/Layers/README.md#props)
@@ -18,4 +17,4 @@ If you change their value, changes automatically applied to the map.
 
 ## Events
 
-All common layer [events](/api/Layers/#events)
+All common layer [events](/api/Layers/README.md#events)
