@@ -58,7 +58,7 @@ If none is passed, VueMapbox imports Mapbox-gl internally.
 You can control map parameters like zoom, bearing, pitch etc. by changing props.
 If you set `.sync` modifier ([Vue docs](https://vuejs.org/v2/guide/components.html#sync-Modifier)) to prop, it will updates when you use operations that takes time to proceed. For example, if you use `flyTo` method, props `zoom`, `center`, `bearing`, `pitch` will be updated when animation ends.
 
-Full list of props see in [API docs](/api/#props), note field 'Synced' in description
+Full list of props see in [API docs](/api/README.md#props), note field 'Synced' in description
 
 ## Map loading
 
@@ -132,7 +132,7 @@ export deafult {
 </script>
 ```
 
-See full list of actions on [API](/api/#actions) page.
+See full list of actions on [API](/api/README.md#actions) page.
 
 ### Method `actions.stop()`
 
@@ -140,4 +140,4 @@ Method `.stop()` just stops all animations on map, updates props with new positi
 
 ### Events
 
-See list of events on [API](/api/#events) page.
+See list of events on [API](/api/README.md#events) page.

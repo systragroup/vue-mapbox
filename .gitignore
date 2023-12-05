@@ -52,3 +52,6 @@ vue-mapbox-demo
 checklist.txt
 .flowconfig
 docs_source/.vuepress/dist
+
+docs/.vitepress/dist
+docs/.vitepress/cache
