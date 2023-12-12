@@ -4,6 +4,12 @@
 
 All common [layers props](/api/Layers/README.md#props)
 
+### `reactive`
+
+- **Type:** `Boolean`
+- **Default:** `true`
+- **Description:** If false, no watcher on the source.data. you would need to manually update (ex: map.getSource('sourID').setData(newData))
+
 ### `source`
 
 - **Type:** `Object | String`

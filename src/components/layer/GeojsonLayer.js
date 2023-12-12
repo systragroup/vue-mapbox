@@ -4,6 +4,12 @@ import mixin from "./layerMixin";
 export default {
   name: "GeojsonLayer",
   mixins: [mixin],
+  props: {
+      reactive: {
+      type: Boolean,
+      default: true
+      }
+  },
 
   computed: {
     getSourceFeatures() {
@@ -87,7 +93,7 @@ export default {
   },
 
   created() {
-    if (this.source) {
+    if (this.source && this.reactive) {
       this.$watch(
         "source.data",
         function(next) {
