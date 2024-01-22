@@ -24,7 +24,7 @@ const i = {
       this.$_emitEvent(e.type, { mapboxEvent: e, ...t });
     }
   }
-}, _ = {
+}, b = {
   resize: { name: "resize" },
   webglcontextlost: { name: "webglcontextlost" },
   webglcontextrestored: { name: "webglcontextrestored" },
@@ -66,7 +66,7 @@ const i = {
   dragstart: { name: "dragstart" },
   pitch: { name: "pitch" },
   idle: { name: "idle" }
-}, b = {
+}, _ = {
   container: {
     type: [String, HTMLElement],
     default() {
@@ -404,8 +404,7 @@ const E = {
       };
     }
   }
-};
-const m = (e, t) => {
+}, m = (e, t) => {
   const r = e.__vccOpts || e;
   for (const [s, a] of t)
     r[s] = a;
@@ -424,7 +423,7 @@ const m = (e, t) => {
       type: Object,
       default: null
     },
-    ...b
+    ..._
   },
   data() {
     return {
@@ -467,7 +466,7 @@ const m = (e, t) => {
         this.RTLTextPluginUrl,
         this.$_RTLTextPluginError
       );
-      const t = Object.keys(_);
+      const t = Object.keys(b);
       this.$_bindMapEvents(t), this.$_registerAsyncActions(e), this.$_bindPropsUpdateEvents(), this.initial = !1, this.initialized = !0, this.$emit("load", { map: e, component: this });
     });
   },
@@ -1036,6 +1035,12 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
 }, X = {
   name: "GeojsonLayer",
   mixins: [o],
+  props: {
+    reactive: {
+      type: Boolean,
+      default: !0
+    }
+  },
   computed: {
     getSourceFeatures() {
       return (e) => this.map ? this.map.querySourceFeatures(this.sourceId, { filter: e }) : null;
@@ -1079,7 +1084,7 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
     }
   },
   created() {
-    this.source && this.$watch(
+    this.source && this.reactive && this.$watch(
       "source.data",
       function(e) {
         this.initial || this.mapSource.setData(e);
@@ -1408,7 +1413,7 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
   withSelfEvents: d,
   asControl: n,
   asLayer: o
-}, ue = B, ce = P, pe = j, me = T, fe = z, ye = F, ge = X, $e = Y, ve = ee, _e = te, be = re, Se = se, Ie = D, Le = H;
+}, ue = B, ce = P, pe = j, me = T, fe = z, ye = F, ge = X, $e = Y, ve = ee, be = te, _e = re, Se = se, Ie = D, Le = H;
 export {
   he as $helpers,
   fe as MglAttributionControl,
@@ -1423,8 +1428,8 @@ export {
   Le as MglPopup,
   Se as MglRasterLayer,
   ye as MglScaleControl,
-  be as MglVectorLayer,
-  _e as MglVideoLayer,
+  _e as MglVectorLayer,
+  be as MglVideoLayer,
   de as asControl,
   le as asLayer,
   B as default,
