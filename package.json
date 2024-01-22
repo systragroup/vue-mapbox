@@ -1,6 +1,6 @@
 {
   "name": "vue-mapbox3",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "author": {
     "name": "simon boivin",
     "email": "sboivin@systra.com",
@@ -23,19 +23,19 @@
   },
   "peerDependencies": {
     "map-promisified": "latest",
-    "mapbox-gl": "^2.15.0",
+    "mapbox-gl": "^3.1.0",
     "vue": "^3.3.8"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.22.10",
-    "@vitejs/plugin-vue": "^4.6.2",
-    "@vue/compiler-sfc": "^3.3.4",
-    "eslint": "^5.10.0",
-    "eslint-loader": "2.1.1",
+    "@vitejs/plugin-vue": "^5.0.3",
+    "@vue/compiler-sfc": "^3.4.15",
+    "eslint": "^8.47.0",
+    "eslint-loader": "4.0.2",
     "vite": "^5.0.12",
     "vite-plugin-style-import": "^2.0.0",
     "vite-plugin-stylelint": "^4.3.0",
-    "vue": "^3.3.8",
+    "vue": "^3.4.15",
     "vitepress": "^1.0.0-rc.40"
   }
 
