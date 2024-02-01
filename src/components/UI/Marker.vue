@@ -1,7 +1,7 @@
 <template>
   <div style="display: none">
     <!-- slot for custom marker -->
-    <slot name="marker" />
+    <slot name="marker" ref="marker" />
     <!-- slot for popup -->
     <slot v-if="marker" />
   </div>
@@ -84,7 +84,7 @@ export default {
       ...this.$props,
     }
     if (this.$slots.marker) {
-      markerOptions.element = this.$slots.marker[0].elm
+      markerOptions.element = this.$refs.marker
     }
     this.marker = new this.mapbox.Marker(markerOptions)
 

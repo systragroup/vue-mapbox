@@ -12,6 +12,10 @@ export default {
     showZoom: {
       type: Boolean,
       default: true
+    },
+    visualizePitch: {
+      type: Boolean,
+      default: false
     }
   },
 

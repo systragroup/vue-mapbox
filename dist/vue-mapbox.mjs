@@ -544,6 +544,10 @@ const B = /* @__PURE__ */ m(k, [["render", C]]), d = {
     showZoom: {
       type: Boolean,
       default: !0
+    },
+    visualizePitch: {
+      type: Boolean,
+      default: !1
     }
   },
   created() {
@@ -702,7 +706,7 @@ const B = /* @__PURE__ */ m(k, [["render", C]]), d = {
     const e = {
       ...this.$props
     };
-    this.$slots.marker && (e.element = this.$slots.marker[0].elm), this.marker = new this.mapbox.Marker(e), this.$attrs["onUpdate:coordinates"] && this.marker.on("dragend", (r) => {
+    this.$slots.marker && (e.element = this.$refs.marker), this.marker = new this.mapbox.Marker(e), this.$attrs["onUpdate:coordinates"] && this.marker.on("dragend", (r) => {
       let s;
       this.coordinates instanceof Array ? s = [r.target._lngLat.lng, r.target._lngLat.lat] : s = r.target._lngLat, this.$emit("update:coordinates", s);
     });
@@ -737,7 +741,7 @@ const B = /* @__PURE__ */ m(k, [["render", C]]), d = {
 }, N = { style: { display: "none" } };
 function U(e, t, r, s, a, h) {
   return c(), p("div", N, [
-    u(e.$slots, "marker"),
+    u(e.$slots, "marker", { ref: "marker" }),
     a.marker ? u(e.$slots, "default", { key: 0 }) : g("", !0)
   ]);
 }

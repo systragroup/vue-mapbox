@@ -101,6 +101,14 @@ Provides a button that uses the browser's geolocation API to locate the user on 
 - **Description:** If true the zoom-in and zoom-out buttons are included.
 - **See:** `options.showZoom` in [NavigationControl](https://docs.mapbox.com/mapbox-gl-js/api/#navigationcontrol)
 
+### `visualizePitch`
+
+- **Type:** `Boolean`
+- **Default:** `false`
+- **Non-Synced**
+- **Description:** If truethe pitch is visualized by rotating X-axis of compass.
+- **See:** `options.showZoom` in [NavigationControl](https://docs.mapbox.com/mapbox-gl-js/api/#navigationcontrol)
+
 ## ScaleControl
 
 ### Props
