@@ -10,6 +10,7 @@ import Popup from "./components/UI/Popup.vue";
 
 import GeojsonLayer from "./components/layer/GeojsonLayer";
 import ImageLayer from "./components/layer/ImageLayer";
+import SymbolLayer from "./components/layer/SymbolLayer";
 import CanvasLayer from "./components/layer/CanvasLayer";
 import VideoLayer from "./components/layer/VideoLayer";
 import VectorLayer from "./components/layer/VectorLayer";
@@ -42,6 +43,7 @@ export const MglScaleControl = ScaleControl;
 
 export const MglGeojsonLayer = GeojsonLayer;
 export const MglImageLayer = ImageLayer;
+export const MglSymbolLayer = SymbolLayer;
 export const MglCanvasLayer = CanvasLayer;
 export const MglVideoLayer = VideoLayer;
 export const MglVectorLayer = VectorLayer;

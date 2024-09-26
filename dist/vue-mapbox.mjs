@@ -1,6 +1,6 @@
-import { computed as f, openBlock as c, createElementBlock as p, setBlockTracking as y, createElementVNode as $, renderSlot as u, createCommentVNode as g } from "vue";
+import { computed as y, openBlock as c, createElementBlock as p, setBlockTracking as f, createElementVNode as $, renderSlot as u, createCommentVNode as g } from "vue";
 import v from "map-promisified";
-const i = {
+const o = {
   methods: {
     /**
      * Emit Vue event with additional data
@@ -411,11 +411,11 @@ const E = {
   return r;
 }, k = {
   name: "GlMap",
-  mixins: [E, x, i, w],
+  mixins: [E, x, o, w],
   provide() {
     return {
-      map: f(() => this.map),
-      mapbox: f(() => this.mapbox)
+      map: y(() => this.map),
+      mapbox: y(() => this.mapbox)
     };
   },
   props: {
@@ -478,14 +478,14 @@ const E = {
 }, M = { class: "mgl-map-wrapper" };
 function C(e, t, r, s, a, h) {
   return c(), p("div", M, [
-    t[0] || (y(-1), t[0] = $("div", {
+    t[0] || (f(-1), t[0] = $("div", {
       id: e.container,
       ref: "container"
-    }, null, 8, ["id"]), y(1), t[0]),
+    }, null, 8, ["id"]), f(1), t[0]),
     a.initialized ? u(e.$slots, "default", { key: 0 }) : g("", !0)
   ]);
 }
-const B = /* @__PURE__ */ m(k, [["render", C]]), d = {
+const B = /* @__PURE__ */ m(k, [["render", C]]), l = {
   methods: {
     $_emitSelfEvent(e, t = {}) {
       this.$_emitMapEvent(e, { control: this.control, ...t });
@@ -509,7 +509,7 @@ const B = /* @__PURE__ */ m(k, [["render", C]]), d = {
     }
   }
 }, n = {
-  mixins: [i, d],
+  mixins: [o, l],
   inject: ["mapbox", "map"],
   props: {
     position: {
@@ -560,7 +560,7 @@ const B = /* @__PURE__ */ m(k, [["render", C]]), d = {
   error: "error"
 }, j = {
   name: "GeolocateControl",
-  mixins: [i, d, n],
+  mixins: [o, l, n],
   props: {
     positionOptions: {
       type: Object,
@@ -656,7 +656,7 @@ const B = /* @__PURE__ */ m(k, [["render", C]]), d = {
   mouseleave: "mouseleave"
 }, Z = {
   name: "MapMarker",
-  mixins: [i, d],
+  mixins: [o, l],
   inject: ["mapbox", "map"],
   provide() {
     const e = this;
@@ -750,7 +750,7 @@ const D = /* @__PURE__ */ m(Z, [["render", U]]), G = {
   close: "close"
 }, q = {
   name: "Popup",
-  mixins: [i, d],
+  mixins: [o, l],
   inject: {
     mapbox: {
       default: null
@@ -881,7 +881,7 @@ function W(e, t, r, s, a, h) {
     u(e.$slots, "default")
   ], 8, V);
 }
-const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
+const H = /* @__PURE__ */ m(q, [["render", W]]), d = [
   "mousedown",
   "mouseup",
   "click",
@@ -930,8 +930,8 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
     type: Boolean,
     default: !1
   }
-}, o = {
-  mixins: [i],
+}, i = {
+  mixins: [o],
   props: {
     ...J,
     ...K,
@@ -1038,7 +1038,7 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
   }
 }, X = {
   name: "GeojsonLayer",
-  mixins: [o],
+  mixins: [i],
   props: {
     reactive: {
       type: Boolean,
@@ -1109,7 +1109,7 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
           this.replaceSource && (this.map.removeSource(this.sourceId), this.map.addSource(this.sourceId, e));
         }
       }
-      this.$_addLayer(), this.$_bindLayerEvents(l), this.map.off("dataloading", this.$_watchSourceLoading), this.initial = !1;
+      this.$_addLayer(), this.$_bindLayerEvents(d), this.map.off("dataloading", this.$_watchSourceLoading), this.initial = !1;
     },
     $_addLayer() {
       const e = this.map.getLayer(this.layerId);
@@ -1150,7 +1150,7 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
   }
 }, Y = {
   name: "ImageLayer",
-  mixins: [o],
+  mixins: [i],
   created() {
     this.source && (this.source.coordinates && this.$watch(
       "source.coordinates",
@@ -1181,7 +1181,7 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
       } catch {
         this.replaceSource && (this.map.removeSource(this.sourceId), this.map.addSource(this.sourceId, e));
       }
-      this.$_addLayer(), this.$_bindLayerEvents(l), this.initial = !1;
+      this.$_addLayer(), this.$_bindLayerEvents(d), this.initial = !1;
     },
     $_addLayer() {
       const e = this.map.getLayer(this.layerId);
@@ -1200,8 +1200,44 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
     }
   }
 }, ee = {
+  name: "SymbolLayer",
+  mixins: [i],
+  created() {
+    this.$_deferredMount();
+  },
+  methods: {
+    $_deferredMount() {
+      const e = {
+        type: "symbol",
+        ...this.source
+      };
+      this.map.on("dataloading", this.$_watchSourceLoading);
+      try {
+        this.map.addSource(this.sourceId, e);
+      } catch {
+        this.replaceSource && (this.map.removeSource(this.sourceId), this.map.addSource(this.sourceId, e));
+      }
+      this.$_addLayer(), this.$_bindLayerEvents(d), this.initial = !1;
+    },
+    $_addLayer() {
+      const e = this.map.getLayer(this.layerId);
+      if (e)
+        if (this.replace)
+          this.map.removeLayer(this.layerId);
+        else
+          return this.$_emitEvent("layer-exists", { layerId: this.layerId }), e;
+      const t = {
+        id: this.layerId,
+        source: this.sourceId,
+        type: "symbol",
+        ...this.layer
+      };
+      this.map.addLayer(t, this.before), this.$_emitEvent("added", { layerId: this.layerId });
+    }
+  }
+}, te = {
   name: "CanvasLayer",
-  mixins: [o],
+  mixins: [i],
   inject: ["mapbox", "map"],
   props: {
     source: {
@@ -1238,7 +1274,7 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
       } catch {
         this.replaceSource && (this.map.removeSource(this.sourceId), this.map.addSource(this.sourceId, e));
       }
-      this.$_addLayer(), this.$_bindLayerEvents(l), this.initial = !1;
+      this.$_addLayer(), this.$_bindLayerEvents(d), this.initial = !1;
     },
     $_addLayer() {
       let e = this.map.getLayer(this.layerId);
@@ -1259,9 +1295,9 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
       });
     }
   }
-}, te = {
+}, re = {
   name: "VideoLayer",
-  mixins: [o],
+  mixins: [i],
   computed: {
     video() {
       return this.map.getSource(this.sourceId).getVideo();
@@ -1284,7 +1320,7 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
       } catch {
         this.replaceSource && (this.map.removeSource(this.sourceId), this.map.addSource(this.sourceId, e));
       }
-      this.$_addLayer(), this.$_bindLayerEvents(l), this.initial = !1;
+      this.$_addLayer(), this.$_bindLayerEvents(d), this.initial = !1;
     },
     $_addLayer() {
       let e = this.map.getLayer(this.layerId);
@@ -1302,9 +1338,9 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
       this.map.addLayer(t, this.before), this.$_emitEvent("added", { layerId: this.layerId });
     }
   }
-}, re = {
+}, se = {
   name: "VectorLayer",
-  mixins: [o],
+  mixins: [i],
   computed: {
     getSourceFeatures() {
       return (e) => this.map ? this.map.querySourceFeatures(this.sourceId, {
@@ -1339,7 +1375,7 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
       } catch {
         this.replaceSource && (this.map.removeSource(this.sourceId), this.map.addSource(this.sourceId, e));
       }
-      this.$_addLayer(), this.$_bindLayerEvents(l), this.map.off("dataloading", this.$_watchSourceLoading), this.initial = !1;
+      this.$_addLayer(), this.$_bindLayerEvents(d), this.map.off("dataloading", this.$_watchSourceLoading), this.initial = !1;
     },
     $_addLayer() {
       let e = this.map.getLayer(this.layerId);
@@ -1376,9 +1412,9 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
       }
     }
   }
-}, se = {
+}, ae = {
   name: "RasterLayer",
-  mixins: [o],
+  mixins: [i],
   created() {
     this.$_deferredMount();
   },
@@ -1394,7 +1430,7 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
       } catch {
         this.replaceSource && (this.map.removeSource(this.sourceId), this.map.addSource(this.sourceId, e));
       }
-      this.$_addLayer(), this.$_bindLayerEvents(l), this.map.off("dataloading", this.$_watchSourceLoading), this.initial = !1;
+      this.$_addLayer(), this.$_bindLayerEvents(d), this.map.off("dataloading", this.$_watchSourceLoading), this.initial = !1;
     },
     $_addLayer() {
       let e = this.map.getLayer(this.layerId);
@@ -1412,31 +1448,32 @@ const H = /* @__PURE__ */ m(q, [["render", W]]), l = [
       this.map.addLayer(t, this.before), this.$_emitEvent("added", { layerId: this.layerId });
     }
   }
-}, oe = i, ne = d, de = n, le = o, he = {
-  withEvents: i,
-  withSelfEvents: d,
+}, ne = o, de = l, le = n, he = i, ue = {
+  withEvents: o,
+  withSelfEvents: l,
   asControl: n,
-  asLayer: o
-}, ue = B, ce = P, pe = j, me = T, fe = z, ye = F, ge = X, $e = Y, ve = ee, be = te, _e = re, Se = se, Ie = D, Le = H;
+  asLayer: i
+}, ce = B, pe = P, me = j, ye = T, fe = z, ge = F, $e = X, ve = Y, be = ee, _e = te, Se = re, Ie = se, Le = ae, Ee = D, xe = H;
 export {
-  he as $helpers,
+  ue as $helpers,
   fe as MglAttributionControl,
-  ve as MglCanvasLayer,
-  me as MglFullscreenControl,
-  ge as MglGeojsonLayer,
-  pe as MglGeolocateControl,
-  $e as MglImageLayer,
-  ue as MglMap,
-  Ie as MglMarker,
-  ce as MglNavigationControl,
-  Le as MglPopup,
-  Se as MglRasterLayer,
-  ye as MglScaleControl,
-  _e as MglVectorLayer,
-  be as MglVideoLayer,
-  de as asControl,
-  le as asLayer,
+  _e as MglCanvasLayer,
+  ye as MglFullscreenControl,
+  $e as MglGeojsonLayer,
+  me as MglGeolocateControl,
+  ve as MglImageLayer,
+  ce as MglMap,
+  Ee as MglMarker,
+  pe as MglNavigationControl,
+  xe as MglPopup,
+  Le as MglRasterLayer,
+  ge as MglScaleControl,
+  be as MglSymbolLayer,
+  Ie as MglVectorLayer,
+  Se as MglVideoLayer,
+  le as asControl,
+  he as asLayer,
   B as default,
-  oe as withEvents,
-  ne as withSelfEvents
+  ne as withEvents,
+  de as withSelfEvents
 };
