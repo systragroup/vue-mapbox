@@ -37,6 +37,7 @@ export default defineConfig({
           { text: 'Vector Layer', link: '/api/Layers/vectorlayer' },
           { text: 'Raster Layer', link: '/api/Layers/rasterlayer' },
           { text: 'Image Layer', link: '/api/Layers/imagelayer' },
+          { text: 'Symbol Layer', link: '/api/Layers/symbollayer' },
           { text: 'Video Layer', link: '/api/Layers/videolayer' },
           { text: 'Canvas Layer', link: '/api/Layers/canvaslayer' },
         ]
